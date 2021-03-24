@@ -9,3 +9,8 @@ Description
 		- Writing the Linker script from scratch.
 		- Automize the build system using GNU Make
 		- Using openOCD and GDB client for programming the microcontroller.
+
+A simple program that was written before which involves configuring the SysTick timer of the 
+processor is taken here as the main program. This application was written previously using 
+STM32CubeIDE as a practice for configuring the SysTick timer. This application is now taken
+for simplicity.
