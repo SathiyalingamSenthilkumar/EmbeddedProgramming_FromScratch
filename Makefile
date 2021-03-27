@@ -18,7 +18,7 @@ TARGET = final
 # Architectures Specific Flags
 LINKER_FILE = STM32f407.ld
 CPU = cortex-m4
-ARCH = thumb
+ISA_ARCH = thumb
 SPECS = nosys.specs
 
 
@@ -26,9 +26,10 @@ SPECS = nosys.specs
 CC = arm-none-eabi-gcc 
 LD = arm-none-eabi-ld
 LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
-CFLAGS = -g -O0 -Wall -Werror -std=gnu11 -mcpu=$(CPU) -m$(ARCH) 
+CFLAGS =  -O0 -Wall -Werror -std=gnu11 -mcpu=$(CPU) -m$(ISA_ARCH) 
 	#-march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16 \
-	#--specs=$(SPECS) -Wall
+	#--specs=$(SPECS) -Wall \
+	#-g #For debug
 
 SIZETOOL = arm-none-eabi-size     #To produce the size of code
 DUMPTOOL = arm-none-eabi-objdump  
@@ -54,9 +55,16 @@ ASMS = $(SOURCES:.c=.asm)
 #Generating the object files	
 %.o : %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
+	
+# Building and linking to obtain the final target
+.PHONY: all
+all:$(TARGET).out 
+
+$(TARGET).out: $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $<
 
 # Cleaning all non-source files and executables
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(PRES) $(ASMS) 
-#$(TARGET).out $(TARGET).map $(TARGET).asm
+	rm -f $(OBJS) $(PRES) $(ASMS) $(TARGET).out 
+#$(TARGET).map $(TARGET).asm
