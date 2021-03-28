@@ -1,7 +1,7 @@
 /**
  ******************************************************************************
  * @file           : main.c
- * @author         : Sathiya Lingam Senthil Kumar
+ * @author         : Sathiya Lingam Senthil Kumar <slsathiya20@gmail.com>
  * @brief          : A simple example of configuring the SysTick timer and blink
  * 					 the LED's. Example was performed to familaize with configuring
  * 					 the SysTick timer

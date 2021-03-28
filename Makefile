@@ -1,17 +1,16 @@
 #------------------------------------------------------------------------------
+#  @file           : Makefile
+#  @author         : Sathiya Lingam Senthil Kumar <slsathiya20@gmail.com>
+#
 # Makefile to perform cross-compilation as per requested platform target
 #
 #      build - Builds and links all source files
 #      all - same as build
 #      compile-all - Compile all object files  
 #      clean - removes all generated files
-#
-# Platform Overrides:
-#      PLATFORM - Can choose between HOST and MSP432
-#
 #------------------------------------------------------------------------------
 
-SOURCES = main.c
+SOURCES = main.c startup_STM32F407.c
 
 TARGET = final
 
