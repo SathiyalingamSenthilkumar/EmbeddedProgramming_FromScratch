@@ -43,8 +43,20 @@ int global_data_2 = 1; //Goes into .data section
 int global_bss_1;      //Goes into .bss section
 int global_bss_2 = 0;  //Goes into .bss section
 
-const int const_data_1 = 10; //Goes into .rodata section 
+const int const_data_1 = 10;     //Goes into .rodata section 
 const uint8_t const_data_2 = 2;  //Goes into .rodata section
+
+struct data_struct{
+	uint32_t var_2;
+	uint8_t var_1;
+};
+
+typedef struct data_struct data_struct_t; 
+
+data_struct_t arr_struct_init_data[50] = {{1,2},{3,2}}; //Goes into .data section
+data_struct_t arr_struct_uinit_bss[50];                 //Goes into .bss section
+//Each array element of struct takes 8 bytes (It is aligned).
+
 
 int main(void)
 {
