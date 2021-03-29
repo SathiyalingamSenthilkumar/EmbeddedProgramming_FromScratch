@@ -37,7 +37,8 @@
 //Function to initialize the SysTick timer
 void init_systick(float timeout);
 
-
+int global_data = 1;
+int global_bss;
 
 int main(void)
 {
