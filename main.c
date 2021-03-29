@@ -9,7 +9,7 @@
  */
 
 #include <stdint.h>
-#include <stdio.h>
+//#include <stdio.h>
 
 
 //-----------Micro controller definitions (STM32F07)------------------
@@ -81,8 +81,14 @@ int main(void)
 
 void init_systick(float timeout){
 
-	float N_singlecount = (1/(float)SYSCLK);
-	uint32_t Ncount_reload = timeout/N_singlecount;
+	//float N_singlecount = (1/(float)SYSCLK);
+	//uint32_t Ncount_reload = timeout/N_singlecount;
+	
+	/* The division part requires few other symbols.
+		Inorder to link with nostdlib the division part is commented out
+	*/
+	
+	uint32_t Ncount_reload = 16000000; //Reload value for a delay of 1 second
 
 	//Registers
 	volatile uint32_t* pSYST_CSR = (uint32_t*) SYST_CSR_ADDR;
