@@ -18,6 +18,18 @@
 
 #define STACK_START (SRAM_END)
 
+
+// The memory boundary information added by Linker in the symbol table
+extern uint32_t _etext;
+extern uint32_t _sdata;
+extern uint32_t _edata;
+
+extern uint32_t _sbss;
+extern uint32_t _ebss;
+
+// Prototype of main
+int main(void);
+
 //Default handler definition
 void Default_Handler(void);
 
@@ -218,13 +230,35 @@ uint32_t vector_table[] __attribute__ ((section (".isr_vector")))= {
 };
 
 void Reset_Handler(void){
-	// Copy the .data section from Flash TO SRAM
+	/* Copy the .data section from Flash TO SRAM 
+		- The memory boundary information can be obtained from linker script
+		- Linker script creates entries in the symbol table of final elf file
+	*/
+	uint32_t size_data = (uint32_t)&_edata - (uint32_t)&_sdata; //Size of the data section
+	
+	uint8_t* pDest = (uint8_t*) &_sdata;  // SRAM
+	uint8_t* pSrc  = (uint8_t*) &_etext;  // Flash memory
+	
+	for(int i = 0; i < size_data; i++){
+		*pDest = *pSrc; // Copying byte by byte
+		pDest++;
+		pSrc++;
+	}
 	
 	// Initialize the .bss section with zeros
+	uint32_t size_bss = (uint32_t)&_ebss - (uint32_t)&_sbss;
+	
+	uint8_t* ptr = (uint8_t*) &_sbss; //Pointer to start of bss
+	
+	for(int i=0; i<size_bss; i++){
+		*ptr = 0;
+		ptr++;
+	}
 	
 	// Initialize the C standard library (Inorder to use library functions)
 	
 	// Invoke main
+	main();
 }
 
 void Default_Handler(void){
