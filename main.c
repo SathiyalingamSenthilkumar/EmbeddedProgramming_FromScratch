@@ -37,8 +37,14 @@
 //Function to initialize the SysTick timer
 void init_systick(float timeout);
 
-int global_data = 1;
-int global_bss;
+int global_data_1 = 1; //Goes into .data section
+int global_data_2 = 1; //Goes into .data section
+
+int global_bss_1;      //Goes into .bss section
+int global_bss_2 = 0;  //Goes into .bss section
+
+const int const_data_1 = 10; //Goes into .rodata section 
+const uint8_t const_data_2 = 2;  //Goes into .rodata section
 
 int main(void)
 {
