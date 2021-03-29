@@ -20,3 +20,30 @@ MEMORY
   FLASH    (rx)    : ORIGIN = 0x08000000,   LENGTH = 1024K
   SRAM     (xrw)   : ORIGIN = 0x20000000,   LENGTH = 128K
 }
+
+/* Sections Definitions*/
+SECTIONS
+{
+  .text :
+  {	
+    *(.isr_vector)
+    *(.text)
+	*(.rodata)
+	_etext = .;        /* define a global symbols at end of text memory (.data section starts here)*/
+  } > FLASH
+  
+  .data :
+  {
+	_sdata = .;        /*Create a global symbol at data start*/  
+	*(.data)
+	_edata = .;        /* define a global symbol at data end */
+  } > SRAM AT> FLASH   /* VMA - SRAM, LMA - FLASH*/
+  
+  .bss :
+  {
+	_sbss = .;  		/* define a global symbol at bss start */
+	*(.bss)
+	_ebss = .;  		/* define a global symbol at bss end */
+  } > SRAM
+
+}
