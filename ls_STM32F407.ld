@@ -29,6 +29,7 @@ SECTIONS
     *(.isr_vector)
     *(.text)
 	*(.rodata)
+	. = ALIGN(4);       /* Aliging to word boundary*/
 	_etext = .;        /* define a global symbols at end of text memory (.data section starts here)*/
   } > FLASH
   
@@ -36,6 +37,7 @@ SECTIONS
   {
 	_sdata = .;        /*Create a global symbol at data start*/  
 	*(.data)
+	. = ALIGN(4);       /* Aliging to word boundary*/
 	_edata = .;        /* define a global symbol at data end */
   } > SRAM AT> FLASH   /* VMA - SRAM, LMA - FLASH*/
   
@@ -43,6 +45,7 @@ SECTIONS
   {
 	_sbss = .;  		/* define a global symbol at bss start */
 	*(.bss)
+	. = ALIGN(4);       /* Aliging to word boundary*/
 	_ebss = .;  		/* define a global symbol at bss end */
   } > SRAM
 
