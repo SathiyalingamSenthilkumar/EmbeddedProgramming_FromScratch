@@ -15,7 +15,7 @@ SOURCES = main.c startup_STM32F407.c
 TARGET = final
 
 # Architectures Specific Flags
-LINKER_FILE = STM32f407.ld
+LINKER_FILE = ls_STM32F407.ld
 CPU = cortex-m4
 ISA_ARCH = thumb
 SPECS = nosys.specs
@@ -24,7 +24,7 @@ SPECS = nosys.specs
 # Compiler Flags and Defines
 CC = arm-none-eabi-gcc 
 LD = arm-none-eabi-ld
-LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE)
+LDFLAGS = -Wl,-Map=$(TARGET).map -T $(LINKER_FILE) -nostdlib
 CFLAGS =  -O0 -Wall -Werror -std=gnu11 -mcpu=$(CPU) -m$(ISA_ARCH) 
 	#-march=armv7e-m -mfloat-abi=hard -mfpu=fpv4-sp-d16 \
 	#--specs=$(SPECS) -Wall \
@@ -45,25 +45,25 @@ ASMS = $(SOURCES:.c=.asm)
 
 #Generating the Preprocessed files
 %.i : %.c
-	$(CC) $(CFLAGS) -E -o $@ $<
+	$(CC) $(CFLAGS) -E -o $@ $^
 
 #Generating the assembly files	
 %.asm : %.c
-	$(CC) $(CFLAGS) -S -o $@ $<
+	$(CC) $(CFLAGS) -S -o $@ $^
 
 #Generating the object files	
 %.o : %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $^
 	
 # Building and linking to obtain the final target
 .PHONY: all
 all:$(TARGET).out 
 
 $(TARGET).out: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 # Cleaning all non-source files and executables
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(PRES) $(ASMS) $(TARGET).out 
-#$(TARGET).map $(TARGET).asm
+	rm -f $(OBJS) $(PRES) $(ASMS) $(TARGET).out $(TARGET).map
+# $(TARGET).asm
