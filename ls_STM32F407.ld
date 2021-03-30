@@ -26,6 +26,7 @@ SECTIONS
 {
   .text :
   {	
+	. = ALIGN(4);       /* Aliging to word boundary*/
     *(.isr_vector)
     *(.text)
 	*(.rodata)
@@ -35,6 +36,7 @@ SECTIONS
   
   .data :
   {
+	. = ALIGN(4);       /* Aliging to word boundary*/  
 	_sdata = .;        /*Create a global symbol at data start*/  
 	*(.data)
 	. = ALIGN(4);       /* Aliging to word boundary*/
@@ -43,6 +45,7 @@ SECTIONS
   
   .bss :
   {
+	. = ALIGN(4);       /* Aliging to word boundary*/  
 	_sbss = .;  		/* define a global symbol at bss start */
 	*(.bss)
 	. = ALIGN(4);       /* Aliging to word boundary*/
