@@ -57,9 +57,14 @@ data_struct_t arr_struct_init_data[50] = {{1,2},{3,2}}; //Goes into .data sectio
 data_struct_t arr_struct_uinit_bss[50];                 //Goes into .bss section
 //Each array element of struct takes 8 bytes (It is aligned).
 
+//Prototype of the function to initialise the semi-hosting feature
+extern void initialise_monitor_handles(void);
 
 int main(void)
-{
+{	
+	//Initializing the semi-hosting feature
+	initialise_monitor_handles();
+
 	//Blinking the LEDs of the board
 	  //4 LED's of the boardare connected to portD pins 12-15
 
@@ -92,7 +97,7 @@ int main(void)
 	*pGPIOD_ODR |= (0 << 15);
 
 	//SYSTICK-------------------------------------------------
-	float timeout = 0.5; //Enter the timeout in seconds (within 1s)=> Reload value is 24 bits calculate the upper limit
+	float timeout = 1; //Enter the timeout in seconds (within 1s)=> Reload value is 24 bits calculate the upper limit
 	init_systick(timeout);
 	//--------------------------------------------------------
 	while(1);
