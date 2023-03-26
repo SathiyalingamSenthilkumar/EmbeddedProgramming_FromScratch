@@ -11,6 +11,29 @@
 	- Using openOCD and GDB client for debugging.
 - The main program uses the SysTick timer (interrupt mode) to blink a few LEDs.
 
+## Toolchain
+
+### Building
+- GNU Make is used to automate the build process.
+- To build the final application:
+```bash
+make all
+```
+### Flashing and Erasing
+- The open-source version of STM's [STLINK tools](https://github.com/stlink-org/stlink) are used for this purpose.
+- Make commands are made available, to flash the executable:
+```bash
+make flash
+```
+- To erase the flash:
+```bash
+make erase
+```
+- To reset the target:
+```bash
+make reset
+```
+
 ## Debug
 
 - The support for printf() style debugging is maintained.

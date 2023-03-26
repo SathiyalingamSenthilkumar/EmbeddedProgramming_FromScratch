@@ -6,8 +6,10 @@
 #
 #      build - Builds and links all source files
 #      all - same as build
-#      compile-all - Compile all object files  
 #      clean - removes all generated files
+#      flash - flashes the executable using st-flash tool
+#      erase - erases the flash using st-flash tool
+#      reset - resets the target
 #------------------------------------------------------------------------------
 
 SOURCES = main.c \
@@ -93,3 +95,15 @@ clean:
 .PHONY: load
 load:
 	openocd -f board/stm32f4discovery.cfg
+
+.PHONY: flash
+flash: $(TARGET).bin
+	st-flash --reset write $^ 0x08000000
+
+.PHONY: erase
+erase:
+	st-flash erase
+
+.PHONY: reset
+reset:
+	st-flash reset
