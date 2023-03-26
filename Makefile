@@ -15,6 +15,9 @@ SOURCES = main.c \
 
 TARGET = final
 
+# Flags
+DEBUG ?= none # support semihosting
+
 # Architectures Specific Flags
 LINKER_FILE = ls_STM32F407.ld
 CPU = cortex-m4
@@ -29,20 +32,26 @@ SIZETOOL = arm-none-eabi-size
 DUMPTOOL = arm-none-eabi-objdump  
 
 #  Target specific flags
-TARGET_SPECIFIC_FLAGS = --specs=$(SPECS) \
-						-mcpu=$(CPU) \
+TARGET_SPECIFIC_FLAGS = -mcpu=$(CPU) \
 						-m$(ISA_ARCH) \
 						-mfloat-abi=soft
 
 #Compiler Flags
 CFLAGS =  -O0 -Wall -Werror -std=gnu11 \
 			$(TARGET_SPECIFIC_FLAGS)
-			#-g #For debug
 
 #Linker Flags
 LDFLAGS = $(TARGET_SPECIFIC_FLAGS)\
           -Wl,-Map=$(TARGET).map \
 		  -T $(LINKER_FILE)
+
+ifeq ($(DEBUG), semihosting)
+	CFLAGS += -DDEBUG_SEMIHOSTING
+	CFLAGS += -g
+	LDFLAGS += --specs=$(SPECS) # For using semi-hosted version of syscalls
+else
+	SOURCES += syscalls.c
+endif
 
 # Creating object file variables
 OBJS = $(SOURCES:.c=.o)

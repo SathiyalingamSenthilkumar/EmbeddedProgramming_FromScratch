@@ -11,6 +11,17 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef DEBUG_SEMIHOSTING
+#define DEBUG 1
+#else /* DEBUG_SEMIHOSTING */
+#define DEBUG 0
+#endif /* DEBUG_SEMIHOSTING */
+
+#if DEBUG
+#define PRINTF(...) printf(__VA_ARGS__)
+#else /* DEBUG */
+#define PRINTF(...) do {} while (0)
+#endif /* DEBUG */
 
 //-----------Micro controller definitions (STM32F07)------------------
   // Defining the base addresses of the u-controller peripherals
@@ -57,13 +68,17 @@ data_struct_t arr_struct_init_data[50] = {{1,2},{3,2}}; //Goes into .data sectio
 data_struct_t arr_struct_uinit_bss[50];                 //Goes into .bss section
 //Each array element of struct takes 8 bytes (It is aligned).
 
+#ifdef DEBUG_SEMIHOSTING
 //Prototype of the function to initialise the semi-hosting feature
 extern void initialise_monitor_handles(void);
+#endif /* DEBUG_SEMIHOSTING */
 
 int main(void)
 {	
+#ifdef DEBUG_SEMIHOSTING
 	//Initializing the semi-hosting feature
 	initialise_monitor_handles();
+#endif /* DEBUG_SEMIHOSTING */
 
 	//Blinking the LEDs of the board
 	  //4 LED's of the boardare connected to portD pins 12-15
@@ -133,7 +148,7 @@ void init_systick(float timeout){
 
 void SysTick_Handler(void){
 	// Printing 
-	printf("Hello from SysTick_Handler\n");
+	PRINTF("Hello from SysTick_Handler\n");
 	
 	// Initializing the pointer variable in this function
 	volatile uint32_t* pGPIOD_ODR   = (uint32_t*)(GPIOD_BASE_ADDR + GPIOD_ODR_OFFST);
