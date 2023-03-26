@@ -11,17 +11,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#ifdef DEBUG_SEMIHOSTING
-#define DEBUG 1
-#else /* DEBUG_SEMIHOSTING */
-#define DEBUG 0
-#endif /* DEBUG_SEMIHOSTING */
-
-#if DEBUG
-#define PRINTF(...) printf(__VA_ARGS__)
-#else /* DEBUG */
-#define PRINTF(...) do {} while (0)
-#endif /* DEBUG */
+/* Debug related macros and functions */
+#include "debug.h"
 
 //-----------Micro controller definitions (STM32F07)------------------
   // Defining the base addresses of the u-controller peripherals
@@ -67,11 +58,6 @@ typedef struct data_struct data_struct_t;
 data_struct_t arr_struct_init_data[50] = {{1,2},{3,2}}; //Goes into .data section
 data_struct_t arr_struct_uinit_bss[50];                 //Goes into .bss section
 //Each array element of struct takes 8 bytes (It is aligned).
-
-#ifdef DEBUG_SEMIHOSTING
-//Prototype of the function to initialise the semi-hosting feature
-extern void initialise_monitor_handles(void);
-#endif /* DEBUG_SEMIHOSTING */
 
 int main(void)
 {	
