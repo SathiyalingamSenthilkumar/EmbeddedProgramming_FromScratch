@@ -30,6 +30,7 @@ CC = arm-none-eabi-gcc
 LD = arm-none-eabi-ld
 SIZETOOL = arm-none-eabi-size
 DUMPTOOL = arm-none-eabi-objdump  
+OBJCOPY = arm-none-eabi-objcopy
 
 #  Target specific flags
 TARGET_SPECIFIC_FLAGS = -mcpu=$(CPU) \
@@ -76,15 +77,18 @@ ASMS = $(SOURCES:.c=.asm)
 	
 # Building and linking to obtain the final target
 .PHONY: all
-all:$(TARGET).out 
+all:$(TARGET).bin
 
-$(TARGET).out: $(OBJS)
+%.bin : %.elf
+	$(OBJCOPY) -O binary $^ $@
+
+$(TARGET).elf: $(OBJS)
 	$(CC) $(LDFLAGS) -o $@ $^
 
 # Cleaning all non-source files and executables
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(PRES) $(ASMS) $(TARGET).out $(TARGET).map
+	rm -f $(OBJS) $(PRES) $(ASMS) $(TARGET).elf $(TARGET).bin $(TARGET).map
 
 .PHONY: load
 load:
