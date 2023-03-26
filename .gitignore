@@ -1,0 +1,10 @@
+*.bin
+*.elf
+*.dfu
+obj_*
+*.hex
+*.map
+*.o
+*.d
+*.a
+*.out
