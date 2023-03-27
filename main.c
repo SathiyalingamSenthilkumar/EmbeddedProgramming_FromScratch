@@ -14,27 +14,10 @@
 /* Debug related macros and functions */
 #include "debug.h"
 
-//-----------Micro controller definitions (STM32F07)------------------
-  // Defining the base addresses of the u-controller peripherals
-#define RCC_BASE_ADDR   (0x40023800)
-#define GPIOD_BASE_ADDR (0x40020C00)
+/* Platform dependant defines */
+#include "stm32f407.h"
 
-  // Defining the offsets of the required registers
-#define RCC_AHB1ENR_OFFST (0x30)
-#define GPIOD_MODER_OFFST (0x0)
-#define GPIOD_ODR_OFFST (0x14)
-//---------------------------------------------------------------------
-
-
-//-----------ARM Cortex M4 peripheral definitions----------------------
 #define SYSCLK 16000000U
-
-//Defining the Address of the SysTick registers
-#define SYST_CSR_ADDR (0xE000E010)
-#define SYST_RVR_ADDR (0xE000E014)
-
-//---------------------------------------------------------------------
-
 
 //Function to initialize the SysTick timer
 void init_systick(float timeout);
