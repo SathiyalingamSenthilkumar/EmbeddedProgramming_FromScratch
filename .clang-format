@@ -1,0 +1,13 @@
+BasedOnStyle: llvm
+IndentWidth: 4
+ColumnLimit: 80
+
+# Fold function parameters to the next line when necessary
+AllowAllParametersOfDeclarationOnNextLine: true
+BinPackParameters: false
+
+# Single line settings
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortLoopsOnASingleLine: true

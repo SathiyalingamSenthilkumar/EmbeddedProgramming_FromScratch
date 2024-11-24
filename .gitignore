@@ -8,3 +8,5 @@ obj_*
 *.d
 *.a
 *.out
+
+venv
